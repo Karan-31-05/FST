@@ -32,6 +32,7 @@ const AdminDashboard = () => {
     } catch {
       setVerifyResult({ error: 'Not found' });
     }
+    setVerifyId('');
   };
 
   const issueCert = async () => {
@@ -42,6 +43,7 @@ const AdminDashboard = () => {
     } catch (err) {
       alert('Error issuing certificate');
     }
+    setForm({ name: '', email: '' });
   };
 
   const issueLOR = async () => {
@@ -51,6 +53,7 @@ const AdminDashboard = () => {
     } catch (err) {
       alert('Error issuing LOR');
     }
+    set
   };
 
   useEffect(() => {
@@ -119,8 +122,8 @@ const AdminDashboard = () => {
       {view === 'issue-cert' && (
         <div>
           <h3>Issue Certificate</h3>
-          <input className="input-field" placeholder="Name" onChange={e => setForm({ ...form, name: e.target.value })} />
-          <input className="input-field" placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} />
+          <input className="input-field" value={form.name} placeholder="Name" onChange={e => setForm({ ...form, name: e.target.value })} />
+          <input className="input-field" value={form.email} placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} />
           <button onClick={issueCert}>Issue Certificate</button>
         </div>
       )}
@@ -130,6 +133,7 @@ const AdminDashboard = () => {
           <h3>Verify Certificate</h3>
           <input
             placeholder="Certificate ID"
+            value={verifyId}
             onChange={e => setVerifyId(e.target.value)}
             style={{
               margin: '1rem',
@@ -194,8 +198,8 @@ const AdminDashboard = () => {
       {view === 'issue-lor' && (
         <div>
           <h3>Issue LOR</h3>
-          <input className="input-field" placeholder="Name" onChange={e => setForm({ ...form, name: e.target.value })} />
-          <input className="input-field" placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} />
+          <input className="input-field" value={form.name} placeholder="Name" onChange={e => setForm({ ...form, name: e.target.value })} />
+          <input className="input-field" value={form.email} placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} />
           <button onClick={issueLOR}>Issue LOR</button>
         </div>
       )}

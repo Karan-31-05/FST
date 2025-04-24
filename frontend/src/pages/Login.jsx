@@ -2,6 +2,7 @@ import '../../src/assets/styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../api';
+//import { set } from 'mongoose';
 
 const Login = () => {
   const location = useLocation();
@@ -28,6 +29,8 @@ const Login = () => {
       console.error("Login error:", err); // Log the error
       alert('Login failed');
     }
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -36,6 +39,7 @@ const Login = () => {
       <input
         className="input-field"
         type="email"
+        value={email}
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
         style={inputStyle}
@@ -48,6 +52,7 @@ const Login = () => {
       <input
         className="input-field"
         type="password"
+        value={password}
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
         style={inputStyle}
