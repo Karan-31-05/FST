@@ -11,6 +11,23 @@ const bcrypt = require('bcrypt');
 exports.issueCertificate = async (req, res) => {
   try {
     const { name, email } = req.body;
+
+    const existingCert = await Certificate.findOne({ email });
+
+    if (existingCert) {
+      // If a certificate exists for this email, return a 409 Conflict error
+      console.warn(`Attempt to issue duplicate certificate for email: ${email}. Existing Cert ID: ${existingCert.certificateId}`);
+      return res.status(409).json({
+        error: 'This mail has already received certificate.', // Your requested message
+        // You could include details of the existing certificate if needed by the frontend
+        // existingCertificate: {
+        //   name: existingCert.name,
+        //   certificateId: existingCert.certificateId,
+        //   issueDate: existingCert.issueDate,
+        // }
+      });
+    }
+    
     const certificateId = `CERT-${Date.now()}`;
     const issueDate = new Date();
 

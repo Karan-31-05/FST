@@ -10,6 +10,7 @@ const AdminDashboard = () => {
   const [form, setForm] = useState({ name: '', email: '' });
   const [verifyId, setVerifyId] = useState('');
   const [verifyResult, setVerifyResult] = useState(null);
+  const [issueError, setIssueError] = useState('');
   const navigate = useNavigate();
 
   const fetchCerts = async () => {
@@ -36,14 +37,27 @@ const AdminDashboard = () => {
   };
 
   const issueCert = async () => {
+    setIssueError(''); // Clear previous errors before trying
     try {
-      await axios.post('/certificates/issue', form);
-      alert('Certificate issued');
-      fetchCerts();
+      const res = await axios.post('/certificates/issue', form);
+      // Use the success message from backend if available, otherwise generic alert
+      alert(res.data?.message || 'Certificate issued successfully');
+      setForm({ name: '', email: '' }); // Clear form on success
+      fetchCerts(); // Refresh list
     } catch (err) {
-      alert('Error issuing certificate');
+      console.error("Error issuing certificate:", err); // Log the full error
+      if (err.response && err.response.data && err.response.data.error) {
+        // If the backend sent a specific error message (like our 409)
+        setIssueError(err.response.data.error); // <-- SET SPECIFIC ERROR
+        // You could also alert this specific error if you still want an alert
+        // alert(`Error: ${err.response.data.error}`);
+      } else {
+        // Generic error if backend didn't send specific message
+        const genericMessage = 'An unexpected error occurred while issuing the certificate.';
+        setIssueError(genericMessage);
+        // alert(genericMessage); // Optional alert for generic errors
+      }
     }
-    setForm({ name: '', email: '' });
   };
 
   const issueLOR = async () => {
@@ -53,7 +67,7 @@ const AdminDashboard = () => {
     } catch (err) {
       alert('Error issuing LOR');
     }
-    set
+    setForm({ name: '', email: '' });
   };
 
   useEffect(() => {
@@ -122,9 +136,31 @@ const AdminDashboard = () => {
       {view === 'issue-cert' && (
         <div>
           <h3>Issue Certificate</h3>
-          <input className="input-field" value={form.name} placeholder="Name" onChange={e => setForm({ ...form, name: e.target.value })} />
-          <input className="input-field" value={form.email} placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} />
+          <input
+            className="input-field"
+            value={form.name}
+            placeholder="Name"
+            onChange={e => {
+              setForm({ ...form, name: e.target.value });
+              setIssueError(''); // <-- Clear error on change
+            }}
+          />
+          <input
+            className="input-field"
+            value={form.email}
+            placeholder="Email"
+            onChange={e => {
+              setForm({ ...form, email: e.target.value });
+              setIssueError(''); // <-- Clear error on change
+            }}
+          />
           <button onClick={issueCert}>Issue Certificate</button>
+          {issueError && (
+            <p style={{ color: 'red', marginTop: '10px' }}>
+              {issueError}
+            </p>
+          )}
+
         </div>
       )}
 
