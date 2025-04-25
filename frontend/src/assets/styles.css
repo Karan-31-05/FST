@@ -1,3 +1,4 @@
+/* === Global/Base Styles (from your original CSS) === */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -5,8 +6,9 @@ body {
   color: #333;
 }
 
+/* Applied using className="page" on the top-level div in JSX */
 .page {
-  max-width: 800px;
+  max-width: 1000px; /* Increased max-width slightly */
   margin: 2rem auto;
   padding: 2rem;
   background-color: #fff;
@@ -19,6 +21,8 @@ h1, h2, h3 {
   margin-bottom: 1rem;
 }
 
+/* --- General Button Style (can be overridden by specific classes) --- */
+/* Consider if you want this default or rely only on specific button classes */
 button {
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
@@ -26,7 +30,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   background-color: #3498db;
-  margin-right: 20px;
+  margin: 5px; /* Added some default margin */
   color: #fff;
   transition: background-color 0.3s ease;
 }
@@ -35,43 +39,11 @@ button:hover {
   background-color: #2980b9;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  padding: 0.7rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-nav {
-  background-color: #333;
-  color: #fff;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav button {
-  background-color: #c0392b;
-}
-
-nav button:hover {
-  background-color: #e74c3c;
-}
-
+/* --- General Input Field Style --- */
+/* Applied using className="input-field" */
 .input-field {
   padding: 0.7rem;
-  margin: 0.5rem 0;
+  margin-bottom: 0.7rem; /* Adjusted margin */
   border: 1px solid #ddd;
   border-radius: 4px;
   width: 100%;
@@ -83,4 +55,139 @@ nav button:hover {
   outline: none;
   border-color: #3498db;
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* === Styles specific to AdminDashboard (converted from JS objects) === */
+
+.admin-nav-buttons {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.nav-button {
+  padding: 10px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #e9ecef;
+  color: #333; /* Text color for nav buttons */
+  font-size: 1rem; /* Match general button font size */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.nav-button:hover {
+  background-color: #dee2e6;
+  border-color: #bbb;
+}
+
+
+.view-container {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center; /* Center content within views */
+}
+
+.input-wide {
+  display: block;
+  width: calc(100% - 24px); /* Adjust width considering padding */
+  padding: 10px;
+  margin: 10px auto; /* Centered with auto margins */
+  max-width: 500px; /* Max width for larger screens */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem; /* Match general input */
+  box-sizing: border-box; /* Ensure padding included in width */
+}
+.input-wide:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.action-button {
+  display: inline-block; /* Changed to inline-block for better centering */
+  padding: 10px 20px;
+  margin: 20px 5px; /* Adjusted margin */
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem; /* Harmonized font size */
+  transition: background-color 0.3s ease;
+}
+.action-button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: #dc3545; /* Bootstrap danger color */
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* --- Table Styles --- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: left; /* Default text align for table */
+}
+
+.table-header {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057; /* Header text color */
+}
+
+.table-cell {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Specific style for label cells in the verify table */
+.table-cell-label {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+  width: 120px; /* Fixed width for labels */
+  background-color: #fdfdfe; /* Slightly different background */
+}
+
+.small-button {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+  margin: 0; /* Remove default button margin */
+}
+.small-button:hover {
+  background-color: #5a6268;
+}
+
+/* Style for verify result table labels */
+.verify-table-label {
+    font-weight: bold;
+    padding-right: 10px;
+    text-align: right;
+    width: 1%; /* Allow label width to shrink */
+    white-space: nowrap; /* Prevent wrapping */
 }

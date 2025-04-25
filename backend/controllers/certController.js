@@ -7,11 +7,24 @@ const path = require('path');
 const fs = require('fs'); // Import the fs module
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const validator = require('validator');
 
 exports.issueCertificate = async (req, res) => {
-  try {
-    const { name, email } = req.body;
 
+  // Validate email format
+  const { name, email } = req.body;
+
+  if (!name || typeof name !== 'string' || name.trim() === '') {
+    return res.status(400).json({ error: 'Student Name is required.' });
+  }
+  if (!email || typeof email !== 'string' || email.trim() === '') {
+    return res.status(400).json({ error: 'Student Email is required.' });
+  }
+  if (!validator.isEmail(email)) { // Using validator library for robust check
+    return res.status(400).json({ error: 'Please provide a valid email address.' });
+  }
+
+  try {
     const existingCert = await Certificate.findOne({ email });
 
     if (existingCert) {
@@ -27,7 +40,7 @@ exports.issueCertificate = async (req, res) => {
         // }
       });
     }
-    
+
     const certificateId = `CERT-${Date.now()}`;
     const issueDate = new Date();
 
@@ -94,14 +107,26 @@ exports.issueCertificate = async (req, res) => {
 
   
 exports.getAllCerts = async (req, res) => {
-  const certs = await Certificate.find();
-  res.json(certs);
+  try { // Add try
+    const certs = await Certificate.find();
+    res.json(certs);
+  } catch (error) { // Add catch
+    console.error("Error fetching all certificates:", error);
+    res.status(500).json({ error: 'Server error fetching certificates' });
+  }
 };
 exports.verifyCert = async (req, res) => {
+  try { // Add try
     const cert = await Certificate.findOne({ certificateId: req.params.id });
-    if (!cert) return res.status(404).json({ error: 'Certificate not found' });
+    if (!cert) {
+      return res.status(404).json({ error: 'Certificate not found' });
+    }
     res.json(cert);
-  };
+  } catch (error) { // Add catch
+    console.error("Error verifying certificate:", error);
+    res.status(500).json({ error: 'Server error verifying certificate' });
+  }
+};
 
 exports.downloadCertificate = async (req, res) => {
   try {
