@@ -1,41 +1,42 @@
-import '../../src/assets/styles.css';
 import { useNavigate } from 'react-router-dom';
+import '../assets/styles/pages/home.css';
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="page" style={{ textAlign: 'center', paddingTop: '4rem' }}>
-      <h1>Welcome to CertifyMe</h1>
-      <p>Please select your login type:</p>
+    <div className="home-container">
+      {/* Floating background elements */}
+      <div className="floating-element"></div>
+      <div className="floating-element"></div>
+      <div className="floating-element"></div>
 
-      <div style={{ marginTop: '2rem' }}>
-        <button
-          style={buttonStyle}
-          onClick={() => navigate('/login?role=student')}
-        >
-          🎓 Student Login
-        </button>
+      <div className="home-content">
+        <h1 className="home-title">Welcome to CertifyMe</h1>
+        <p className="home-subtitle">
+          Your trusted platform for secure certificate management and verification
+        </p>
 
-        <button
-          style={{ ...buttonStyle, marginLeft: '1rem' }}
-          onClick={() => navigate('/login?role=admin')}
-        >
-          🛡️ Admin Login
-        </button>
+        <div className="login-options">
+          <button
+            className="login-button student-login"
+            onClick={() => navigate('/login?role=student')}
+          >
+            <span>🎓</span>
+            Student Login
+          </button>
+
+          <button
+            className="login-button admin-login"
+            onClick={() => navigate('/login?role=admin')}
+          >
+            <span>🛡️</span>
+            Admin Login
+          </button>
+        </div>
       </div>
     </div>
   );
-};
-
-const buttonStyle = {
-  padding: '1rem 2rem',
-  fontSize: '16px',
-  cursor: 'pointer',
-  borderRadius: '8px',
-  border: 'none',
-  backgroundColor: '#4CAF50',
-  color: 'white',
 };
 
 export default Home;

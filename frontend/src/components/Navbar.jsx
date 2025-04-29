@@ -11,33 +11,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar" style={navStyle}>
-      <Link to="/">Home</Link>
-
-      {token && (
-        <>
-          <button onClick={logout} style={buttonStyle}>Logout</button>
-        </>
-      )}
+    <nav className="navbar">
+      <Link to="/" className="navbar-brand">
+        <span className="navbar-brand-icon">🏠</span>
+        <span>Home</span>
+      </Link>
+      
+      <div className="navbar-menu">
+        {token && (
+          <button onClick={logout} className="navbar-button">
+            <span>🚪</span>
+            <span>Logout</span>
+          </button>
+        )}
+      </div>
     </nav>
   );
-};
-
-const navStyle = {
-  backgroundColor: '#333',
-  padding: '1rem',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-};
-
-const buttonStyle = {
-  padding: '0.5rem 1rem',
-  backgroundColor: '#f44336',
-  color: 'white',
-  border: 'none',
-  borderRadius: '4px',
-  cursor: 'pointer',
 };
 
 export default Navbar;

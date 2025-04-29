@@ -1,7 +1,8 @@
-import '../../src/assets/styles.css'; // Keep global styles if needed
+// import '../../src/assets/styles.css'; // Keep global styles if needed
 import React, { useState, useEffect } from 'react';
 import axios from '../api'; // Ensure this points to your configured axios instance
 // import { useNavigate } from 'react-router-dom'; // Uncomment if needed later
+import '../assets/styles/pages/admin.css';
 
 const AdminDashboard = () => {
   const [showWelcome, setShowWelcome] = useState(true);

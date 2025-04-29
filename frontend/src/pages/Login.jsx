@@ -1,8 +1,6 @@
-import '../../src/assets/styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from '../api';
-//import { set } from 'mongoose';
 
 const Login = () => {
   const location = useLocation();
@@ -15,7 +13,7 @@ const Login = () => {
   const login = async () => {
     try {
       const res = await axios.post('/auth/login', { email, password, role });
-      console.log("Login response:", res.data); // Log the entire response
+      console.log("Login response:", res.data);
 
       localStorage.setItem('token', res.data.token);
       alert(`${role} login successful`);
@@ -26,56 +24,63 @@ const Login = () => {
         navigate('/student');
       }
     } catch (err) {
-      console.error("Login error:", err); // Log the error
+      console.error("Login error:", err);
       alert('Login failed');
     }
     setEmail('');
     setPassword('');
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      login();
+    }
+  };
+
   return (
-    <div className="page" style={{ textAlign: 'center', paddingTop: '4rem' }}>
-      <h2>{role === 'admin' ? 'Admin' : 'Student'} Login</h2>
-      <input
-        className="input-field"
-        type="email"
-        value={email}
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-        style={inputStyle}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            login();
-          }
-        }}
-      />
-      <input
-        className="input-field"
-        type="password"
-        value={password}
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-        style={inputStyle}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            login();
-          }
-        }}
-      />
-      <br />
-      <button onClick={login} style={{ ...inputStyle, backgroundColor: '#2196F3', color: 'white' }}>
-        Login
-      </button>
+    <div className="page-container">
+      <div className="form-container">
+        <div className="form-header">
+          <h1 className="form-title">{role === 'admin' ? 'Admin' : 'Student'} Login</h1>
+          <p className="form-subtitle">Welcome back! Please enter your credentials</p>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            className="form-input"
+            value={email}
+            placeholder="Enter your email"
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            id="password"
+            type="password"
+            className="form-input"
+            value={password}
+            placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        
+        <button className="form-button" onClick={login}>
+          <span>Login</span>
+        </button>
+        
+        <div className="form-footer">
+          <a href="/forgot-password" className="form-link">Forgot Password?</a>
+        </div>
+      </div>
     </div>
   );
 };
 
-const inputStyle = {
-  margin: '1rem',
-  padding: '0.8rem',
-  width: '250px',
-  borderRadius: '6px',
-  border: '1px solid #ccc',
-};
-
-export default Login; // ✅ THIS LINE IS MANDATORY!
+export default Login;

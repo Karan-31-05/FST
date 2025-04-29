@@ -2,7 +2,6 @@
 // FILE: frontend/src/pages/StudentDashboard.jsx
 // ============================================================
 
-import '../../src/assets/styles.css'; // Keep global styles if needed
 import React, { useEffect, useState } from 'react'; // Import React
 import axios from '../api'; // Your configured axios instance
 import { jwtDecode } from 'jwt-decode'; // Or your preferred JWT decoding method
@@ -231,7 +230,7 @@ const StudentDashboard = () => {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th className="table-header">Course/Program Name</th>
+                  <th className="table-header">Student Name</th>
                   <th className="table-header">Certificate ID</th>
                   <th className="table-header">Status</th>
                   <th className="table-header">Issued Date</th>
