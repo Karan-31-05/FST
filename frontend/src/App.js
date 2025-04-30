@@ -11,17 +11,30 @@ import "./App.css";
 function App() {
   return (
     <Router>
-      <Navbar />
+      
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/verify/:id" element={<VerifyCertificate />} />
+        <Route path="/" element={
+          <Home />
+        } />
+        <Route path="/login" element={
+          <>
+          <Navbar />
+          <Login />
+          </>
+        } />
+        <Route path="/verify/:id" element={
+          <>
+          <Navbar />
+          <VerifyCertificate />
+          </>
+        } />
 
         {/* 🔐 Protected routes */}
         <Route
           path="/admin"
           element={
             <ProtectedRoute>
+              <Navbar />
               <AdminDashboard />
             </ProtectedRoute>
           }
@@ -30,6 +43,7 @@ function App() {
           path="/student"
           element={
             <ProtectedRoute>
+              <Navbar />
               <StudentDashboard />
             </ProtectedRoute>
           }
